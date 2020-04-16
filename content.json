@@ -1,0 +1,97 @@
+{
+    "IO": {
+        "Input from a line": {
+            "Dart": {
+                "0" : "Dart captures a line from the console using the method readLineSync().\nThis method will wait until a new line to save the input.\nBelow is an example usage of this method.",
+                "1" : "void main() {\nstdout.write(\"What's your name?\");\nvar name = stdin.readLineSync();\nprint(\"Hi, $name!\");\n}}"
+            },
+            "Java": {
+                "0" : "In Java, the Scanner class is used to get user input from the console, and it is found in the java.util package.\nTo use the Scanner class, you need to create an object of the class and use any of the available methods found in the Scanner class documentation.\nThis example uses the nextLine method to read in a line from the user.",
+                "1" : "public static void main(String[] args) {\nScanner myObj = new Scanner(System.in);  \/\/ Create a Scanner object\nSystem.out.println(\"Enter username\");\nString userName = myObj.nextLine();  \/\/ Read user input\nSystem.out.println(\"Username is: \" + userName);  \/\/ Output user input}"
+            },
+            "Swift": {
+                "0" : "Swift uses the readLine method to read input from the keyboard. It always returns an Optional by default, so it must be unwrapped to use.\nThe method also comes with an optional boolean parameter called strippingNewLine, which is by default set to true, and assumes that the new line is not a part of the input.",
+                "1" : "Funf myFunc() -> Void {\nlet response = readLine()\nprint(response)\n}"
+            }
+        },
+        "Print statements": {
+            "Dart": {
+                "0" : "Dart prints to the console using the print method.\nIt uses a “$” key value to represent interpolation. Below is an example of this:",
+                "1" : "var value = 12;\nprint('The value of the input is: $value');\n\/\/prints: The value of the input is: 12"
+            },
+            "Java": {
+                "0" : "Java’s print method is a bit more verbose, using System.out.print() to print to the console.\nEach print statement will not begin on a new line unless System.out.println() is used to denote a new line.\nInstead of using interpolation like Swift and Dart, Java simply uses the + operator to denote a concatenation of strings and variables.",
+                "1" : "Example:\nint val = 50;\nSystem.out.println(\"45 + 5 = \" + val);"
+            },
+            "Swift": {
+                "0" : "With Swift, it’s print method it much like Dart’s. You can print to console using print(). Each print statement will be on a new line. This method can fully function as its own program. Example:",
+                "1" : "print(\"Hello world\")"
+            }
+        }
+    },
+    "Data": {
+        "Variable declarations": {
+            "Dart": {
+                "0" : "Variables in Dart can be typed in a number of different ways.\nVar allows for implicit typing of a variable, defaulting to a ‘dynamic’ type. Variables can also be explicitly typed as a String, int, double, or boolean.\nFinal and const can be used for a constant, unchanging variable.\nFinal is a simple, single assignment variable, while const is a variable whose value is decided at runtime and will never change.\nExplicit types may also be immutable, by using and _ character before the name, i.e. _myString. Some examples are below.",
+                "1" : "var name = \"Henry\";\nString dog = \"woof\";\nint age = 12;"
+            },
+            "Java" : {
+                "0" : "Java’s variable declarations must include the type before the name and it does not come with an option for dynamically typed variables.\nJava’s primitive variable types are: boolean, char, int, byte, short, long, float, double.\nIts non-primitive types are String, array, class, and interface. Below are examples.",
+                "1" : "String name = \"Henry\";\nString dog = \"woof\";\nint age = 12;"
+            },
+            "Swift" : {
+                "0" : "Swift has the following variable types: Int, Double, String, and Bool.\nYou must use the keywords “let” and “var” to create variables without defining the variable type.\nSwift is a type-safe language, which means that it will not compile if there are errors within the code, like if you passed an Int and tried to parse it like a String.",
+                "1" : "var name = \"Henry\";\nvar dog: String = \"woof\";\nlet age: Int = 12;"
+            }
+        },
+        "Strings": {
+            "Dart": {
+                "0" : "Strings in Dart are simple and easy to use.\nTheir type must be declared with the keyword String before the variable name, and their content must be enclosed with two ‘’ marks.\nString may be concatenated with a simple + operator, and interpolation can be done using ${} inside of another string.\nString comparison is also straightforward with a simple == operator.",
+                "1" : "String str = ‘This is a string’;\nprint(str);\nString str1 = ‘Hello, ’;\nString str2 = ‘World!’;\nString hellostr = str1 + str2;\nString mathstr = ‘The sum of 1 and 1 is ${1 + 1}’;\nIf (‘hello’ == ‘hello’) return true;"
+            },
+            "Java" : {
+                "0" : "Strings in Java are similar to dart, with a few key differences. Like dart, they must be declared as a String type, and are immutable.\nThey can be concatenated with a simple + operator.\nInterpolation is accomplished as concatenating a value to a string.\nComparison of strings in Java is somewhat different from dart, using the .equals() call on a string. Below are some examples.",
+                "1" : "String str = “This is a string”;\nSystem.out.println(str);\nString str1 = “Hello, “;\nString str2 = “World!”;\nString hellostr = str1 + str2;\nString mathstr = “The sum of 5 and 6 is” + (5 + 6);\nif (“hello”.equals(“hello”)) return true;"
+            },
+            "Swift" : {
+                "0" : "Swift strings are comparable to dart. The biggest difference is that strings are not inherently immutable,\nand their mutability is decided by declaring them with let (constant) or var (not constant). Otherwise, they look very similar to dart,\nwith string interpolation done with a () inside the string, and comparison done with a simple == operator. Below is an example.",
+                "1" : "let str1 = \"Hello, \"\nlet str2 = \"World!\"\nlet helloStr = str1 + str2\nLet mathStr = \"The sum of 5 and 6 is: (5 + 6)\"\nprint(mathStr)"
+            }
+        },
+        "List" : {
+            "Dart" : {
+                "0" : "Dart’s lists have the following attributes: first, isEmpty, isnotEmpty, length, last, reversed, and single.\nDart’s lists are growable lists if they are created without a size identifier and are fixed size if they are created with a size.\nBelow is an example of both a fixed-size list and a growable list.",
+                "1" : "void main() {\nvar fixedSizeList = new List(3);\nfixedSizeList[0] = 12;\nfixedSizeList[1] = 13;\nfixedSizeList[2] = 11;\nprint(fixedSizeList);\n\/\/prints [12, 13, 11]}",
+                "2" : "void main() {\nvar lst = new List();\nlst.add(12);\nlst.add(13);\nprint(lst);\n\/\/prints [12, 13]}"
+            },
+            "Java" : {
+                "0" : "Java has both Arrays that are like fixed size lists in Dart and ArrayLists which are like resizable Arrays.\nBoth come from the java.util package. Below is the an example of creating an ArrayList in Java:",
+                "1" : "ArrayList<String> cars = new ArrayList<String>();\ncars.add(“Honda”);\ncars.add(“Hyundai”);\ncars.add(“Ford”);"
+            },
+            "Swift" : {
+                "0" : "Swift’s arrays are an ordered, random-access collection.\nArrays can store any type of element: from integers to strings to classes.\nBelow is an example of many ways to instantiate an array in Swift.",
+                "1" : "\/\/ An array of 'Int' elements\nlet oddNumbers = [1, 3, 5, 7, 9, 11, 13, 15]",
+                "2" : "\/\/ An array of 'String' elements\nlet streets = [\"Albemarle\", \"Brandywine\", \"Chesapeake\"]",
+                "3" : "\/\/ Shortened forms are preferred\nvar emptyDoubles: [Double] = []",
+                "4" : "\/\/ The full type name is also allowed\nvar emptyFloats: Array<Float> = Array()",
+                "5" : "var digitCounts = Array(repeating: 0, count: 10)"
+            }
+        },
+        "Maps" : {
+            "Dart" : {
+                "0" : "Dart has a Map<K,V> class with keys and values like many other languages.",
+                "1" : "Maps, and their keys and values, can be iterated.\nThe order of iteration is defined by the individual type of map. For instance, the HashMap is unordered,\nthe LinkedHashMap iterates in key insertion order, and the sorted map like a SplayTreeMap iterates the keys in sorted order.",
+                "2" : "Maps have many properties, for instance: entries, isEmpty, keys, length, values, isNotEmpty.\nMap methods include clear(), containsKey(Object key), containsValue(Object value), etc.",
+                "3" : "Example of a map:\nvar details = new Map(); \ndetails['a'] = '100'; \nprint(details);"
+            },
+            "Java" : {
+                "0" : "Java’s maps are a lot like Dart’s maps.\nThey are a part of the java.util.Map interface. They represent a mapping between a key and a value.\nThe map cannot contain duplicate keys and each key can map to at most one value.\nThere are various implementations like the HashMap, LinkedHashMap and TreeMap.\nThe TreeMap and LinkedHashMap have predictable order, but HashMap does not.\nHashMaps are very commonly used. Below is an example of a HashMap in Java.",
+                "1" : "Map< String,Integer> hm = new HashMap<Integer, String>();\nhm.put(new Integer(1), “a”);\nhm.put(new Integer(2), “b”);\nhm.put(new Integer(3), “c”);"
+            },
+            "Swift" : {
+                "0" : "In Swift, the most similar structure to Dart’s Maps are dictionaries.\nThey are very similar to Dart’s Maps where a dictionary key must be a unique identifier to store a value and then can be referenced and looked up through the same key.\nThey can be initialized in the following ways:",
+                "1" : "var someDict = [KeyType: ValueType]()\nvar someDict = [Int: String]()\nvar someDict:[Int:String] = [1:\"a\", 2:\"b\", 3:\"c\"]\nvar languageLikes: Dictionary<String,Int> = [\"Java\":10, \"Objective-C\":2, \"Swift\":12, \"VB\":0]\nThey are added to using the following syntax:\nlanguageLikes[\"Ruby\"] = 15"
+            }
+        }
+    }
+}
