@@ -138,7 +138,7 @@
       }
     }
   },
-  "Functions/Classes": {
+  "Functions": {
     "Function Declarations": {
       "Dart": {
         "0" : "Functions in Dart consist of a name followed by parentheses and the code is encapsulated inside brackets. It can also define the type of return expected form a function. Below is an example of a simple function:",
