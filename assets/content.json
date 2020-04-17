@@ -93,5 +93,85 @@
         "1" : "var someDict = [KeyType: ValueType]()\nvar someDict = [Int: String]()\nvar someDict:[Int:String] = [1:\"a\", 2:\"b\", 3:\"c\"]\nvar languageLikes: Dictionary<String,Int> = [\"Java\":10, \"Objective-C\":2, \"Swift\":12, \"VB\":0]\nThey are added to using the following syntax:\nlanguageLikes[\"Ruby\"] = 15"
       }
     }
+  },
+  "Flow": {
+    "Loops": {
+      "Dart": {
+        "0" : "Loops are used for repeated information or iteration over certain data structures. Dart has the for loop to iterate through a structure a certain number of times:\nfor (var i = 0; i < 5; i++) {\nprint('Loop: ${i}');\n}\nDart has the for...in loop to iterate through properties of an object:\nfor (var prop in obj) { \nprint(prop);\n}\nDart has the while loop:\nvoid main() { \n var num = 5; \n var factorial = 1; \n while(num >=1) { \n factorial = factorial * num; \n num--;\n}\nprint('The factorial  is ${factorial}');\n}\nDart has the do while loop:",
+        "1" : "void main() { \n var n = 10; \n do { \n print(n); \n n--; \n } \n while(n>=0); \n}"
+      },
+      "Java" : {
+        "0" : "Java has very similar loops to Dart. It has the for loop, the while loop, and the do...while loop. It also has a continue and break statement, like Dart.\n Example of for loop:",
+        "1" : "public class Test { \n public static void main(String args[]) { \n for(int x = 10; x < 20; x = x + 1) {\n System.out.println('value of x : ' + x );\n}\n}\n}"
+      },
+      "Swift" : {
+        "0" : "Swift is a bit different than Java and dart in that it has the following loops: for...in, while, and repeat… while. The for...in loop is much like that in Dart using the keyword “in” to iterate through values in objects. The repeat...while loop is much like the do while loop, but with the keyword “repeat” instead of “do”. Swift also has continue and break statements. \nBelow is an example of the for...in loop in Swift.",
+        "1" : "var someInts:[Int] = [10, 20, 30]\nfor index in someInts {\nprint( 'Value of index is \\(index)')\n}"
+      }
+    },
+    "Switch Statements": {
+      "Dart": {
+        "0" : "Switch statements evaluate a condition and then execute the code following that condition if it is positive. It requires a break statement to stop evaluating the subsequent cases. \nHere is an example of Dart’s syntax:",
+        "1" : "void main() { \nvar grade = 'A'; \nswitch(grade) { \ncase 'A': {  print('Excellent'); } \n break; \ncase 'B': {  print('Good'); } \nbreak; \ncase 'C': {  print('Fair'); } \nbreak; \ncase 'D': {  print('Poor'); } \nbreak; \ndefault: { print('Invalid choice'); } \nbreak; \n} \n}\nThis will print: A"
+      },
+      "Java" : {
+        "0" : "Java’s syntax for a switch statment is very similar to Dart’s syntax. Below is some sample code",
+        "1" : "public class Test {\npublic static void main(String args[]) {\n// char grade = args[0].charAt(0);\nchar grade = 'C';\nswitch(grade) {\ncase 'A' :\nSystem.out.println('Excellent!'); \nbreak;\ncase 'B' :\ncase 'C' :\nSystem.out.println('Well done');\nbreak;\ncase 'D' :\nSystem.out.println('You passed');\ncase 'F' :\nSystem.out.println('Better try again');\nbreak;\ndefault :\nSystem.out.println('Invalid grade');\n}\nSystem.out.println('Your grade is ' + grade);\n}\n}\nThis will evaluate to:\nWell done\nYour grade is C"
+      },
+      "Swift" : {
+        "0" : "Swift’s switch statements are much like Dart’s, but instead of naturally needing a break statement, they naturally break. Instead, Swift needs the keyword 'fallthrough' to evaluate like Dart naturally behaves without the 'break' keyword. Below are two examples, one without a fallthrough statement and the following with a fallthrough statement.\nvar index = 10\nswitch index {\ncase 100 :\nprint( 'Value of index is 100')\ncase 10,15 :\nprint( 'Value of index is either 10 or 15')\ncase 5 :\nprint( 'Value of index is 5')\ndefault :\nprint( 'default case')\n}This will print 'Value of index is either 10 or 15', as one would expect. \n\nWith the fallthrough statement, once a case condition is true, then the subsequent case statements will be bypassed and execute no matter their boolean values. \nFor instance, take the following code:",
+        "1" : "var index = 100\nswitch index {\ncase 100 :\nprint( 'Value of index is 100')\nfallthrough\ncase 10,15 :\nprint( 'Value of index is either 10 or 15')\nfallthrough\ncase 5 :\nprint( 'Value of index is 5')\ndefault :\nprint( 'default case')\n}\nThis will print:\nValue of index is 100\nValue of index is either 10 or 15\nValue of index is 5"
+      }
+    },
+    "If statements" : {
+      "Dart" : {
+        "0" : "Like many languages, Dart contains if statements, else if statements, and else statements. Below is an example of this syntax.",
+        "1" : "void main() {\nvar num = 2; \nif(num > 0) { \nprint('${num} is positive'); \n} \nelse if(num < 0) { \nprint('${num} is negative'); \n} else { \nprint('${num} is neither positive nor negative'); \n}\n}"
+      },
+      "Java" : {
+        "0" : "Java’s syntax is very similar to Dart’s. ",
+        "1" : "public class Test {\npublic static void main(String args[]) {\nnint x = 30;\nif( x < 20 ) {\n System.out.print('This is if statement');\n}else if (x == 30){\n System.out.print('This is else if statement');\n}else{\nSystem.out.print('This is else statement');\n}\n}\n}"
+      },
+      "Swift" : {
+        "0" : "Swift’s overall if, if else, and else structure is largely the same, although Swift does not require parentheses for their evaluative clauses. Below is an example of their syntax.",
+        "1" : "var varA:Int = 100;\n /* Check the boolean condition using if statement */\nif varA == 20 {\n/* If condition is true then print the following */\nprint('varA is equal to than 20');\n} else if varA == 50 {\n/* If condition is true then print the following */\nprint('varA is equal to than 50');\n} else {\n/* If condition is false then print the following */\nprint('None of the values is matching');\n}\nprint('Value of variable varA is \\(varA)');"
+      }
+    }
+  },
+  "Functions/Classes": {
+    "Function Declarations": {
+      "Dart": {
+        "0" : "Functions in Dart consist of a name followed by parentheses and the code is encapsulated inside brackets. It can also define the type of return expected form a function. Below is an example of a simple function:",
+        "1" : "test() { \n//function definition \nprint('function called'); }\nInt test2() {\nReturn 2;\n}",
+        "2" : "Dart’s syntax to call a function is using the name of the function with parens and parameters inside the parens, if appropriate.\ntest() \nParams would look like this:",
+        "3" : "void main() { \n test_param(123,'this is a string'); \n}  \ntest_param(int n1,String s1) { \n  print(n1); \n  print(s1); \n}"
+      },
+      "Java" : {
+        "0" : "Java’s syntax for creating functions similar, but a bit more verbose than Dart’s. It’s overall syntax includes a modifier like public or private, a return type like int or String, and then the name of the method with optional parameters. Below is an example of a method with this syntax:",
+        "1" : "public int addition(int a, int b) {\n Return a + b;\n}"
+      },
+      "Swift" : {
+        "0" : "Swift changes the syntax by including the return type after an arrow and uses the 'func' keyword to define a function. Below is an example of a simple addition function in Swift.",
+        "1" : "func addition(a: Int, b: Int) -> Int { \n  return a + b \n}"
+      }
+    },
+    "Classes": {
+      "Dart": {
+        "0" : "Dart is an object-oriented programming language and supports the object-oriented feature of classes. Dart uses the keyword class to begin a new class definition. This is followed by the class name and a curly brace to encompass the information. The syntax is below:",
+        "1" : "class class_name {  \n  <fields> \n  <getters/setters> \n  <constructors> \n  <functions> \n }",
+        "3" : "\nExample:",
+        "4" : "class Car {  \n  // field \n  String engine = 'E1001';\n  // function \n void disp() { \n print(engine); \n  } \n}",
+        "5" : "To create an instance of a class, it uses the keyword 'new' to instantiate a new instance.\n",
+        "6" : "var object_name = new class_name([ arguments ])\nvar obj = new Car('Engine 1')"
+      },
+      "Java" : {
+        "0" : "Java’s syntax for a class is similar to Dart’s, except that it must include a modifier in front of the class. Below is an example:",
+        "1" : "public class Dog {\n  String breed;\n  int age;\n  String color;\n void barking() {\n  }\n  void hungry() {\n }\n  void sleeping() {\n }\n}"
+      },
+      "Swift" : {
+        "0" : "Classes are objects in Swift, as well. They are reference types. Much like classes in Dart, they can contain variables and methods inside them and support inheritance. They can also have multiple initializers with different parameters.",
+        "1" : "struct Dog {\n let name: String\n var breed: String\n var age: Int\ninit(name:String, breed: String, age: Int){\n self.name = name;\n  self.breed = breed;\n  self.age = age;\n //** Get the dog details *//\n func myDogDetail() -> String {\n   return ('\\(self.name) belongs to \\(self.breed) and \\(self.age)')\n }\n}"
+      }
+    }
   }
 }
