@@ -1,5 +1,5 @@
 {
-  "IO": {
+  "Input/Output": {
     "Input from a line": {
       "Dart": {
         "0" : "Dart captures a line from the console using the method readLineSync().\nThis method will wait until a new line to save the input.\nBelow is an example usage of this method.",

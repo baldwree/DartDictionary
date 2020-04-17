@@ -10,64 +10,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dart Dictionary',
       theme: ThemeData(
         // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.amber[100],
+        scaffoldBackgroundColor: Colors.amber[200],
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Dart Dictionary'),
     );
   }
-}
-
-/*class Section {
-  String title;
-  List<String> categories;
-  Section(String title, Map<String, dynamic> jsonArray) {
-    this.title = title;
-    this.categories = [];
-    jsonArray[title].forEach((k, v) => this.categories.add(k));
-  }
-}*/
-
-class Content {
-  String category;
-  /*List<String> dart;
-  List<String> java;
-  List<String> swift;*/
-  List<String> data;
-  Content(String category, Map<String, dynamic> jsonArray) {
-    this.category = category;
-    /*this.dart = [];
-    jsonArray["Dart"].forEach((k, v) => this.dart.add(v));
-    this.java = [];
-    jsonArray["Java"].forEach((k, v) => this.java.add(v));
-    this.swift = [];
-    jsonArray["Swift"].forEach((k, v) => this.swift.add(v));*/
-    this.data = [];
-    jsonArray["Dart"].forEach((k, v) => this.data.add(v));
-    jsonArray["Java"].forEach((k, v) => this.data.add(v));
-    jsonArray["Swift"].forEach((k, v) => this.data.add(v));
-  }
-}
-
-Future<String> loadContentAsset() async {
-  return await rootBundle.loadString('assets/content.json');
-}
-
-Future<Map<String, dynamic>> loadContent() async {
-  String jsonString = await loadContentAsset();
-  final jsonResponse = json.decode(jsonString);
-  return jsonResponse;
 }
 
 class MyHomePage extends StatefulWidget {
@@ -88,20 +39,35 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+Future<String> loadContentAsset() async {
+  return await rootBundle.loadString('assets/content.json');
+}
+
+Future<Map<String, dynamic>> loadContent() async {
+  String jsonString = await loadContentAsset();
+  final jsonResponse = json.decode(jsonString);
+  return jsonResponse;
+}
+
+Map<String, dynamic> content;
+List<Content> contents;
+List<String> entries;
+bool _loaded = false;
+String choice;
+List<String> favorites = [];
+String curTitle;
+var information;
+
 class _MyHomePageState extends State<MyHomePage> {
   final String arrayText = '{"lessons": ['
-      '"Java Strings are just ok.",'
-      '"Java Strings are just fine.",'
-      '"Java Strings are just great!"'
+      '"Input/Output",'
+      '"Data",'
+      '"Flow",'
+      '"Functions",'
+      '"History of Flutter and Dart"'
       ']}';
-  List<String> entries = [];
-  final Set<String> _saved = Set<String>();
-  int _counter = 0;
-  final List<int> colorCodes = <int>[600, 500, 100];
 
-  Map<String, dynamic> content;
-  List<Content> contents;
-  bool _loaded = false;
+  //Map<String, dynamic> content;
   @override
   void initState() {
     super.initState();
@@ -110,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _loaded = true;
     }));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +88,102 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     // Load our json values into a usable string list
-    //var lessonsJson = jsonDecode(arrayText)['lessons'];
-    contents = [];
+    var lessonsJson = jsonDecode(arrayText)['lessons'];
+    List<String> lessons = lessonsJson != null ? List.from(lessonsJson) : null;
+    entries = lessons;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: <Widget>[      // Add 3 lines from here...
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+        ],
+      ),
+      body: Center(
+        child: ListView.separated(
+
+          padding: const EdgeInsets.all(8),
+          itemCount: entries.length,
+          itemBuilder: (BuildContext context, int index) {
+
+            return _buildRow('${entries[index]}');
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+        ),
+      ),
+    );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Favorites'),
+            ),
+            body: Center(
+              child: ListView.separated(
+                padding: const EdgeInsets.all(8),
+                itemCount: favorites.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text (
+                        favorites[index]
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildRow(entry) {
+    return Container(
+      height: 75,
+      child: RaisedButton(
+        color: Colors.amber[100],
+        textColor: Colors.black,
+        onPressed: () {
+          choice = entry;
+          Navigator.push( context,
+            MaterialPageRoute(builder: (context) => SecondRoute()),
+          );
+        },
+        child: new Text(entry,
+            textAlign: TextAlign.center),
+      ),
+    );
+  }
+}
+
+class Content {
+  String category;
+  List<String> data;
+  Content(String category, Map<String, dynamic> jsonArray) {
+    this.category = category;
+    this.data = [];
+    jsonArray["Dart"].forEach((k, v) => this.data.add(v));
+    jsonArray["Java"].forEach((k, v) => this.data.add(v));
+    jsonArray["Swift"].forEach((k, v) => this.data.add(v));
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  final _contentLoaded = _loaded;
+  final String userchoice = choice;
+  @override
+  Widget build(BuildContext context) {
+
+    var contents = [];
     List<String> categories = [];
     Content mycontent;
-    String userchoice = "Data";
-    if (_loaded) {
+
+    if (_contentLoaded) {
       var newJson = content[userchoice];
       newJson.forEach((k, v) {
         mycontent = new Content(k, v);
@@ -135,83 +192,99 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
-    //List<String> lessons = lessonsJson != null ? List.from(lessonsJson) : null;
-    if (_loaded) {
-      //entries = mycontent.swift;
-      //contents.forEach((content) => entries.add(content.category));
-      entries = categories;
-    }
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(userchoice),
       ),
       body: _loaded ?
-        Center(
-          child: ListView.separated(
-            padding: const EdgeInsets.all(8),
-            itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildRow('${entries[index]}');
-            },
-            separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
-          ),
-        ) : new Center(
-          child: new CircularProgressIndicator(),
+      Center(
+        child: ListView.separated(
+          padding: const EdgeInsets.all(8),
+          //itemCount: entries.length,
+          itemCount: categories.length,
+          itemBuilder: (BuildContext context, int index) {
+            //return _buildRow('${entries[index]}', contents, context);
+            return _buildRow('${categories[index]}', categories, contents, context);
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+        ),
+      ) : new Center(
+        child: new CircularProgressIndicator(),
       ),
     );
   }
 
-  Widget _buildRow(entry) {
+  Widget _buildRow(entry, categories, contents, context) {
     return Container(
-        height: 75,
-        width: 100,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
-        color: Colors.amber[200],
-        child: ListTile(
+      height: 75,
+      width: 100,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
+      color: Colors.amber[100],
+      child: ListTile(
           title: Text(
-            entry
+              entry
           ),
           onTap: () {
-            _pushSaved(entry, contents[entries.indexOf(entry)].data);
+            curTitle = entry;
+            information = contents[categories.indexOf(entry)].data;
+            //_pushSaved(entry, contents[categories.indexOf(entry)].data, context);
+            Navigator.push( context,
+              MaterialPageRoute(builder: (context) => ThirdRoute()),
+            );
           }),
-        //)
+      //)
     );
   }
+}
 
-  void _pushSaved(String title, List<String> entries) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-            ),
-            body:  Center(
-              child: ListView.separated(
-                padding: const EdgeInsets.all(8),
-                itemCount: entries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _buildList('${entries[index]}');
-                },
-                separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
-              ),
-            ),
-          );
-        }
-      )
+class ThirdRoute extends StatefulWidget {
+  @override
+  ThirdRouteState createState() => ThirdRouteState();
+}
+
+class ThirdRouteState extends State<ThirdRoute> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(curTitle),
+      ),
+      body:  Center(
+        child: ListView.separated(
+          padding: const EdgeInsets.all(8),
+          itemCount: information.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildList('${information[index]}');
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+        ),
+      ),
     );
   }
 
   Widget _buildList(entry) {
-    final bool alreadySaved = _saved.contains(entry);
+    final bool alreadySaved = favorites.contains(entry);
     return ListTile(
       title: Text(
           entry
       ),
+      trailing: Icon(
+          alreadySaved ? Icons.star : Icons.star_border,
+          color: alreadySaved ? Colors.yellow : null
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            favorites.remove(entry);
+          }
+          else {
+            favorites.add(entry);
+          }
+        });
+      },
     );
   }
 
