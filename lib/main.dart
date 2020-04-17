@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,11 +22,52 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.amber[100],
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
+}
+
+/*class Section {
+  String title;
+  List<String> categories;
+  Section(String title, Map<String, dynamic> jsonArray) {
+    this.title = title;
+    this.categories = [];
+    jsonArray[title].forEach((k, v) => this.categories.add(k));
+  }
+}*/
+
+class Content {
+  String category;
+  /*List<String> dart;
+  List<String> java;
+  List<String> swift;*/
+  List<String> data;
+  Content(String category, Map<String, dynamic> jsonArray) {
+    this.category = category;
+    /*this.dart = [];
+    jsonArray["Dart"].forEach((k, v) => this.dart.add(v));
+    this.java = [];
+    jsonArray["Java"].forEach((k, v) => this.java.add(v));
+    this.swift = [];
+    jsonArray["Swift"].forEach((k, v) => this.swift.add(v));*/
+    this.data = [];
+    jsonArray["Dart"].forEach((k, v) => this.data.add(v));
+    jsonArray["Java"].forEach((k, v) => this.data.add(v));
+    jsonArray["Swift"].forEach((k, v) => this.data.add(v));
+  }
+}
+
+Future<String> loadContentAsset() async {
+  return await rootBundle.loadString('assets/content.json');
+}
+
+Future<Map<String, dynamic>> loadContent() async {
+  String jsonString = await loadContentAsset();
+  final jsonResponse = json.decode(jsonString);
+  return jsonResponse;
 }
 
 class MyHomePage extends StatefulWidget {
@@ -52,52 +94,21 @@ class _MyHomePageState extends State<MyHomePage> {
       '"Java Strings are just fine.",'
       '"Java Strings are just great!"'
       ']}';
-  List<String> entries;
+  List<String> entries = [];
   final Set<String> _saved = Set<String>();
   int _counter = 0;
-  /*List<String> entries = <String>[
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps."
-  ];*/
   final List<int> colorCodes = <int>[600, 500, 100];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Map<String, dynamic> content;
+  List<Content> contents;
+  bool _loaded = false;
+  @override
+  void initState() {
+    super.initState();
+    loadContent().then((s) => setState(() {
+      content = s;
+      _loaded = true;
+    }));
   }
 
   @override
@@ -110,9 +121,26 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     // Load our json values into a usable string list
-    var lessonsJson = jsonDecode(arrayText)['lessons'];
-    List<String> lessons = lessonsJson != null ? List.from(lessonsJson) : null;
-    entries = lessons;
+    //var lessonsJson = jsonDecode(arrayText)['lessons'];
+    contents = [];
+    List<String> categories = [];
+    Content mycontent;
+    String userchoice = "Data";
+    if (_loaded) {
+      var newJson = content[userchoice];
+      newJson.forEach((k, v) {
+        mycontent = new Content(k, v);
+        contents.add(mycontent);
+        categories.add(k);
+      });
+    }
+
+    //List<String> lessons = lessonsJson != null ? List.from(lessonsJson) : null;
+    if (_loaded) {
+      //entries = mycontent.swift;
+      //contents.forEach((content) => entries.add(content.category));
+      entries = categories;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -120,58 +148,71 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView.separated(
-          padding: const EdgeInsets.all(8),
-          itemCount: entries.length,
-          itemBuilder: (BuildContext context, int index) {
-            /*return GestureDetector(
-                onTap: () {
-                  _saved.add('${entries[index]}');
-                },
-                child: Container(
-                  height: 100,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
-                  color: Colors.amber[100],
-                  child: Center(child: Text('${entries[index]}')),
-                ),
-            );*/
-            return _buildRow('${entries[index]}');
-          },
-                separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
-    ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: _loaded ?
+        Center(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(8),
+            itemCount: entries.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildRow('${entries[index]}');
+            },
+            separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+          ),
+        ) : new Center(
+          child: new CircularProgressIndicator(),
+      ),
     );
   }
 
   Widget _buildRow(entry) {
-    final bool alreadySaved = _saved.contains(entry);
     return Container(
         height: 75,
-        //padding: EdgeInsets.all(10),
-        //margin: EdgeInsets.all(10),
-        color: Colors.amber[100],
+        width: 100,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
+        color: Colors.amber[200],
         child: ListTile(
           title: Text(
             entry
           ),
-          trailing: Icon(   // Add the lines from here...
-            alreadySaved ? Icons.favorite : Icons.favorite_border,
-            color: alreadySaved ? Colors.red : null,
-          ),
           onTap: () {
-            setState(() {
-              if (alreadySaved) {
-                _saved.remove(entry);
-              } else {
-                _saved.add(entry);
-              }
-            });
-          },
-        )
+            _pushSaved(entry, contents[entries.indexOf(entry)].data);
+          }),
+        //)
     );
   }
+
+  void _pushSaved(String title, List<String> entries) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(title),
+            ),
+            body:  Center(
+              child: ListView.separated(
+                padding: const EdgeInsets.all(8),
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildList('${entries[index]}');
+                },
+                separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+              ),
+            ),
+          );
+        }
+      )
+    );
+  }
+
+  Widget _buildList(entry) {
+    final bool alreadySaved = _saved.contains(entry);
+    return ListTile(
+      title: Text(
+          entry
+      ),
+    );
+  }
+
 }
