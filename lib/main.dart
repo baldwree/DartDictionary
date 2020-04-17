@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dart Dictionary',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
         scaffoldBackgroundColor: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Dart Dictionary'),
     );
   }
 }
@@ -48,57 +48,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final String arrayText = '{"lessons": ['
-      '"Java Strings are just ok.",'
-      '"Java Strings are just fine.",'
-      '"Java Strings are just great!"'
+      '"Input/Output",'
+      '"Data",'
+      '"Flow",'
+      '"Functions",'
+      '"History of Flutter and Dart"'
       ']}';
   List<String> entries;
   final Set<String> _saved = Set<String>();
-  int _counter = 0;
-  /*List<String> entries = <String>[
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps.",
-    "Lord, what fools these mortals be!",
-    """Sigh no more, ladies, sigh no more,
-        Men were deceivers ever;
-        One foot in sea, and one on shore,
-        To one thing constant never.""",
-    "They have been at a great feast of languages, and stol'n the scraps."
-  ];*/
   final List<int> colorCodes = <int>[600, 500, 100];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,54 +83,42 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: ListView.separated(
+
           padding: const EdgeInsets.all(8),
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
-            /*return GestureDetector(
-                onTap: () {
-                  _saved.add('${entries[index]}');
-                },
-                child: Container(
-                  height: 100,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
-                  color: Colors.amber[100],
-                  child: Center(child: Text('${entries[index]}')),
-                ),
-            );*/
+
             return _buildRow('${entries[index]}');
           },
-                separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
-    ),
+          separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   Widget _buildRow(entry) {
+
     final bool alreadySaved = _saved.contains(entry);
     return Container(
         height: 75,
-        //padding: EdgeInsets.all(10),
-        //margin: EdgeInsets.all(10),
         color: Colors.amber[100],
-        child: ListTile(
-          title: Text(
-            entry
+
+
+        child: RaisedButton(
+//            padding: const EdgeInsets.all(8.0),
+            textColor: Colors.white,
+            //color: Colors.amber[100],
+            //onPressed: addNumbers,
+            child: new Text(entry,
+                textAlign: TextAlign.center),
           ),
-          trailing: Icon(   // Add the lines from here...
-            alreadySaved ? Icons.favorite : Icons.favorite_border,
-            color: alreadySaved ? Colors.red : null,
-          ),
-          onTap: () {
-            setState(() {
-              if (alreadySaved) {
-                _saved.remove(entry);
-              } else {
-                _saved.add(entry);
-              }
-            });
-          },
-        )
+
+//        child: ListTile(
+//          title: Text(
+//              entry,
+//              textAlign: TextAlign.center
+//          ),
+//        )
     );
   }
 }
