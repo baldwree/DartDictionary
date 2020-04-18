@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // This is the theme of your application.
         primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.amber[200],
+        scaffoldBackgroundColor: Colors.amberAccent[100],
       ),
       home: MyHomePage(title: 'Dart Dictionary'),
     );
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[      // Add 3 lines from here...
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+          IconButton(icon: Icon(Icons.list), onPressed: _pushFavorites),
         ],
       ),
       body: Center(
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _pushSaved() {
+  void _pushFavorites() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
@@ -127,10 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(8),
                 itemCount: favorites.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text (
-                        favorites[index]
-                    ),
+                  return Container (
+                      margin: EdgeInsets.all(10),
+                      color: Colors.amber[100].withOpacity(0.65),
+                      child: ListTile(
+                        title: Text (
+                            favorites[index]
+                          ),
+                      )
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
@@ -202,10 +206,8 @@ class SecondRoute extends StatelessWidget {
       Center(
         child: ListView.separated(
           padding: const EdgeInsets.all(8),
-          //itemCount: entries.length,
           itemCount: categories.length,
           itemBuilder: (BuildContext context, int index) {
-            //return _buildRow('${entries[index]}', contents, context);
             return _buildRow('${categories[index]}', categories, contents, context);
           },
           separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black45),
@@ -222,15 +224,19 @@ class SecondRoute extends StatelessWidget {
       width: 100,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
-      color: Colors.amber[100],
+      decoration: new BoxDecoration(
+          color: Colors.amber[100],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(width: 2.0, color: Colors.amber[200])
+      ),
       child: ListTile(
-          title: Text(
+          title: Center ( child: Text(
               entry
+            )
           ),
           onTap: () {
             curTitle = entry;
             information = contents[categories.indexOf(entry)].data;
-            //_pushSaved(entry, contents[categories.indexOf(entry)].data, context);
             Navigator.push( context,
               MaterialPageRoute(builder: (context) => ThirdRoute()),
             );
@@ -267,24 +273,32 @@ class ThirdRouteState extends State<ThirdRoute> {
 
   Widget _buildList(entry) {
     final bool alreadySaved = favorites.contains(entry);
-    return ListTile(
-      title: Text(
-          entry
-      ),
-      trailing: Icon(
-          alreadySaved ? Icons.star : Icons.star_border,
-          color: alreadySaved ? Colors.yellow : null
-      ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            favorites.remove(entry);
-          }
-          else {
-            favorites.add(entry);
-          }
-        });
-      },
+    return Container (
+        margin: EdgeInsets.all(10),
+        decoration: new BoxDecoration(
+            color: Colors.amber[100].withOpacity(0.65),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(width: 2.0, color: Colors.amber[200])
+        ),
+        child: ListTile(
+          title: Text(
+              entry
+          ),
+          trailing: Icon(
+              alreadySaved ? Icons.star : Icons.star_border,
+              color: alreadySaved ? Colors.teal[300] : null
+          ),
+          onTap: () {
+            setState(() {
+              if (alreadySaved) {
+                favorites.remove(entry);
+              }
+              else {
+                favorites.add(entry);
+              }
+            });
+          },
+        )
     );
   }
 

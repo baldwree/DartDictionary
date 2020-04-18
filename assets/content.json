@@ -173,5 +173,25 @@
         "1" : "struct Dog {\n let name: String\n var breed: String\n var age: Int\ninit(name:String, breed: String, age: Int){\n self.name = name;\n  self.breed = breed;\n  self.age = age;\n //** Get the dog details *//\n func myDogDetail() -> String {\n   return ('\\(self.name) belongs to \\(self.breed) and \\(self.age)')\n }\n}"
       }
     }
+  },
+  "History of Flutter and Dart" : {
+    "Dart History" : {
+      "Dart" : {
+        "0" : "Dart was first unveiled by Google at the GOTO conference in Aarhus, Germany in 2011. Dart was then released in 2013 and Dart 2.0 was released more recently in 2018. Dart is an object oriented language that uses C-style syntax. It can be fully converted to Javascript. When it’s run as Javascript, then it’s fully precompiled into Javascript and works as if it’s Javascript in browsers, so there do not need to be any add ons to run Dart applications when this happens. It’s also used in mobile app development and web. It’s most popular framework is flutter, which people use to create native mobile applications in both IOS and Android with the same dart code. As of March 15th, 2020 Dart was 24th on the TIOBE index."
+      },
+      "Java" : {
+      },
+      "Swift" : {
+      }
+    },
+    "Flutter History" : {
+      "Dart" : {
+        "0" : "Flutter is a development kit made by Google. It was first released at a 2015 Dart developer conference and has been upgraded most recently in December 2019 to Flutter 1.12. It uses Dart as a platform, so Flutter apps are written using the Dart language. Flutter apps can be built on the macOS, Windows, or Linux platform within the Dart virtual machine. It also features hot reloading in which the language supports saving a file and re-compiling changes while still running the app."
+      },
+      "Java" : {
+      },
+      "Swift" : {
+      }
+    }
   }
 }
