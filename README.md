@@ -1,6 +1,6 @@
-# scrolllist
+# Dart Dictionary
 
-A new Flutter application.
+Reece and Kelly's final project for CIS 357.
 
 ## Getting Started
 
