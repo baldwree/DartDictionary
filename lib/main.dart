@@ -21,22 +21,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+class Content {
+  String category;
+  List<String> data;
+  Content(String category, Map<String, dynamic> jsonArray) {
+    this.category = category;
+    this.data = [];
+    jsonArray["Dart"].forEach((k, v) => this.data.add(v));
+    jsonArray["Java"].forEach((k, v) => this.data.add(v));
+    jsonArray["Swift"].forEach((k, v) => this.data.add(v));
+  }
 }
 
 Future<String> loadContentAsset() async {
@@ -58,6 +52,24 @@ List<String> favorites = [];
 String curTitle;
 var information;
 
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   final String arrayText = '{"lessons": ['
       '"Input/Output",'
@@ -67,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
       '"History of Flutter and Dart"'
       ']}';
 
-  //Map<String, dynamic> content;
   @override
   void initState() {
     super.initState();
@@ -77,16 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }));
   }
 
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
     // Load our json values into a usable string list
     var lessonsJson = jsonDecode(arrayText)['lessons'];
     List<String> lessons = lessonsJson != null ? List.from(lessonsJson) : null;
@@ -95,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[      // Add 3 lines from here...
+        actions: <Widget>[
           IconButton(icon: Icon(Icons.list), onPressed: _pushFavorites),
         ],
       ),
@@ -133,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                         title: Text (
                             favorites[index]
-                          ),
+                        ),
                       )
                   );
                 },
@@ -162,18 +165,6 @@ class _MyHomePageState extends State<MyHomePage> {
             textAlign: TextAlign.center),
       ),
     );
-  }
-}
-
-class Content {
-  String category;
-  List<String> data;
-  Content(String category, Map<String, dynamic> jsonArray) {
-    this.category = category;
-    this.data = [];
-    jsonArray["Dart"].forEach((k, v) => this.data.add(v));
-    jsonArray["Java"].forEach((k, v) => this.data.add(v));
-    jsonArray["Swift"].forEach((k, v) => this.data.add(v));
   }
 }
 
@@ -232,7 +223,7 @@ class SecondRoute extends StatelessWidget {
       child: ListTile(
           title: Center ( child: Text(
               entry
-            )
+          )
           ),
           onTap: () {
             curTitle = entry;
@@ -301,5 +292,5 @@ class ThirdRouteState extends State<ThirdRoute> {
         )
     );
   }
-
 }
+
